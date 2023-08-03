@@ -1,3 +1,46 @@
+h1 {
+    text-align: center;
+    font-weight: bold;
+    color: rgb(41, 117, 117);
+}
+ body {
+    max-height: fit-content;
+    max-width: fit-content
+ }
+button {
+    height: 30px;
+    width: 100px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+    display: block;
+    margin: auto;
+}
+
+.lives {
+    display: block;
+    margin: auto;  
+    height: 30px;
+    width: 100px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.clock {
+    height: 30px;
+    width: 200px;
+    background: linear-gradient(rgb(244, 241, 241), rgb(12, 86, 83)) ;
+    border-radius: 10%;
+    border: 1px solid black;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+    display: block;
+    font-size: 25px;
+    
+}
 body {
 margin: auto;    
 }

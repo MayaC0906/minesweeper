@@ -20,7 +20,7 @@ var gGame = {
 
 
 function onInIt() {
-    resetGgame()
+    resetGame()
     const elGameOver = document.querySelector('.gameOver')
     elGameOver.innerText = '😆'
     gBoard = buildBoard()
@@ -214,8 +214,8 @@ function checkGameOver() {
 
     if (gLevel.SIZE ** 2 === (gGame.shownCount + gGame.markedCount) &&
         gGame.markedCount === gLevel.MINES) {
-            elWinGame.innerText = '😎'
         clearInterval(gTimerInterval)
+        elWinGame.innerText = '😎'
         gGame.isOn = false
     }
 
@@ -283,7 +283,11 @@ function timer() {
     }, 37)
 }
 
-function resetGgame() {
+function resetGame() {
+    clearInterval(gTimerInterval)
+    var elColock = document.querySelector('.clock')
+    elColock.innerText = '0.000'
+
     gGame.isOn = true
     gGame.shownCount = 0
     gGame.markedCount = 0
@@ -293,8 +297,6 @@ function resetGgame() {
     var elLives = document.querySelector('.lives')
     elLives.innerText = '❤️❤️❤️'
 
-    var elColock = document.querySelector('.clock')
-    elColock.innerText = '0.000'
 }
 
 function setGameLevel(size, mines) {

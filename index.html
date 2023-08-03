@@ -7,11 +7,16 @@
     <title>Mine Sweeper</title>
 </head>
 <body onload="onInIt()">
-<div class="lose hide"> You lost!☹️ <button onclick="onInIt()">PLAY AGAIN</button></div>
-<div class="win hide">Congratulations You won!🎉 <button onclick="onInIt()">PLAY AGAIN</button></div>
+    <h1>Mine Sweeper</h1>
+    <button onclick="setGameLevel(4, 2)">Begginer</button>
+    <button onclick="setGameLevel(8, 14)">Medium</button>
+    <button onclick="setGameLevel(12,32)">Expert</button>
+    <div class="clock"> 0.000</div>
     <table class="boardGame">
+        
     </table>
-    <button onclick="onInIt()">😆</button>
+    <div class="lives">❤️❤️❤️</div>
+    <button class="gameOver" onclick="onInIt()">😆</button>
     <script src="js/util.js"></script>
     <script src="js/game.js"></script>
 </body>

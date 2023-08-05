@@ -131,34 +131,66 @@ function onCellClicked(elCell, i, j) {
     if (gBoard[i][j].isMarked === true) return
     gBoard[i][j].isShown = true
     gGame.shownCount++
+    console.log(gGame.shownCount);
+
+    if (gGame.shownCount===1&&gBoard[i][j].type===MINE||
+        gGame.shownCount===1&&gBoard[i][j].type===NEIGHBOR ) {
+        if (gBoard[i][j].type===MINE) moveMine()
+        gBoard[i][j].type= EMPTY
+        gBoard[i][j].isMine===false
+    }
+
     if (gGame.shownCount === 1) timer()
+    checkCell (i,j)
 
-    if (gBoard[i][j].type === NEIGHBOR) neighborChosen(i, j)
+    // if (gBoard[i][j].type === NEIGHBOR) neighborChosen(i, j)
 
-    else if (gBoard[i][j].type === EMPTY) {
-        emptyChosen(i, j)
-        openNegs(i, j)
-    }
+    // if (gBoard[i][j].type === EMPTY) {
+    //     emptyChosen(i, j)
+    //     openNegs(i, j)
+    // }
 
-    else if (gBoard[i][j].type === MINE) {
-        if (checkLivesOver() === false) {
-            gGame.shownCount--
-            gBoard[i][j].isShown = false
-        }
-        else mineChosen()
-    }
+    // if (gBoard[i][j].type === MINE) {
+    //     if (checkLivesOver() === false) {
+    //         gGame.shownCount--
+    //         gBoard[i][j].isShown = false
+    //     }
+    //     else mineChosen()
+    // }
 
 
     checkGameOver()
 
 }
 
+function checkCell (i,j) {
+    if (gBoard[i][j].type === NEIGHBOR) neighborChosen(i, j)
+
+    if (gBoard[i][j].type === EMPTY) {
+        emptyChosen(i, j)
+        openNegs(i, j)
+    }
+
+    if (gBoard[i][j].type === MINE) {
+        if (checkLivesOver() === false) {
+            gGame.shownCount--
+            console.log(gGame.shownCount)
+            gBoard[i][j].isShown = false
+        }
+        else mineChosen()
+    }
+
+}
 
 function openNegs(i, j) {
+    if (gGame.shownCount === 1) return
     const cellNegs = getCellNegs(i, j)
     // console.log(cellNegs);
     for (var k = 0; k < cellNegs.length; k++) {
         var currCell = cellNegs[k]
+if (gBoard[currCell.i][currCell.j].isShown === true){
+    gGame.shownCount--
+} 
 
         // var currClass = getClassName(currCell.i, currCell.j)
         // var elCell = document.querySelector(currClass)
@@ -166,17 +198,20 @@ function openNegs(i, j) {
         if (gBoard[currCell.i][currCell.j].isMarked === true) {
             gBoard[currCell.i][currCell.j].isMarked = false
             gGame.markedCount--
+            
         }
 
         if (gBoard[currCell.i][currCell.j].type === NEIGHBOR) {
             neighborChosen(currCell.i, currCell.j)
             gBoard[currCell.i][currCell.j].isShown = true
             gGame.shownCount++
+            console.log(gGame.shownCount)
         }
         if (gBoard[currCell.i][currCell.j].type === EMPTY) {
             emptyChosen(currCell.i, currCell.j)
             gBoard[currCell.i][currCell.j].isShown = true
             gGame.shownCount++
+            console.log(gGame.shownCount)
         }
     }
     checkGameOver()
@@ -207,6 +242,7 @@ function onCellMarked(elCell, i, j) {
     elCell.innerText = EMPTY
     gBoard[i][j].isMarked = false
     gGame.markedCount--
+    console.log(gGame.markedCount);
 }
 
 function checkGameOver() {
@@ -238,6 +274,7 @@ function addFlag(elCell, i, j) {
         elCell.innerText = FLAG
         gBoard[i][j].isMarked = true
         gGame.markedCount++
+        console.log(gGame.markedCount);
         checkGameOver()
     }
 
@@ -319,3 +356,20 @@ function checkLivesOver() {
     if (livesLeft > 0) return false
     if (livesLeft === 0) return true
 } 
+
+function moveMine () {
+var mineCount =0
+var boardIdxs = getAllBoardIdxs(gBoard) 
+console.log(boardIdxs);
+for (var k=0;k<boardIdxs.length;k++) {
+    if (mineCount===1) return
+    var currI = boardIdxs[k].i
+    var currJ = boardIdxs[k].j
+    if (gBoard[currI][currJ].type===EMPTY) {
+        gBoard[currI][currJ].type=MINE
+        gBoard[currI][currJ].isMine=true
+        mineCount++
+    }
+    setMinesNegsCount(gBoard)
+}
+}
